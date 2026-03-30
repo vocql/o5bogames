@@ -1126,7 +1126,83 @@ footer {
     </div>
   </div>
 </div>
+<!-- ======= SUPABASE LOGIN MODAL ======= -->
+<div class="modal-backdrop" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-logo">VI HUB <span></span></div>
+    <div class="modal-tagline">Sign in to your account</div>
+    <div class="modal-tabs">
+      <button class="mtab on" data-tab="loginTab">Login</button>
+      <button class="mtab" data-tab="registerTab">Register</button>
+    </div>
+    <div class="mpanel on" id="loginTab">
+      <div class="fg">
+        <label class="fl">Email</label>
+        <input type="email" class="fi" id="loginEmail" placeholder="you@example.com">
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <input type="password" class="fi" id="loginPassword" placeholder="••••••••">
+      </div>
+      <button class="bsubmit" onclick="login()">Login</button>
+    </div>
+    <div class="mpanel" id="registerTab">
+      <div class="fg">
+        <label class="fl">Email</label>
+        <input type="email" class="fi" id="registerEmail" placeholder="you@example.com">
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <input type="password" class="fi" id="registerPassword" placeholder="••••••••">
+      </div>
+      <button class="bsubmit" onclick="register()">Register</button>
+    </div>
+  </div>
+</div>
 
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const supabaseUrl = 'https://qgpzpoozgglixrlaeqed.supabase.co';
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncHpwb296Z2dsaXhybGFlcWVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4OTU1MzksImV4cCI6MjA5MDQ3MTUzOX0.vgr9ffLuIznRAOEf9swIMrEZZ9xotqivj9osMa_mvwc';
+
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  async function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return alert('Login failed: ' + error.message);
+    alert('Login successful! Welcome ' + data.user.email);
+    closeModal();
+  }
+
+  async function register() {
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) return alert('Registration failed: ' + error.message);
+    alert('Registration successful! Check your email to confirm.');
+    closeModal();
+  }
+
+  function closeModal() {
+    document.getElementById('loginModal').classList.remove('open');
+  }
+
+  function openModal() {
+    document.getElementById('loginModal').classList.add('open');
+  }
+
+  document.querySelectorAll('.mtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.mtab').forEach(t => t.classList.remove('on'));
+      document.querySelectorAll('.mpanel').forEach(p => p.classList.remove('on'));
+      tab.classList.add('on');
+      document.getElementById(tab.dataset.tab).classList.add('on');
+    });
+  });
 <script>
 /* ── STARFIELD ── */
 (function(){
