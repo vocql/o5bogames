@@ -1,98 +1,1331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE BACKROOMS - Full 3D Unity Version</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      height: 100%;
-      background: #000;
-      color: #c8b830;
-      font-family: 'Share Tech Mono', monospace;
-      overflow: hidden;
-    }
-    iframe {
-      width: 100vw;
-      height: 100vh;
-      border: none;
-      display: block;
-    }
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      z-index: 10;
-      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%);
-    }
-    .header {
-      position: absolute;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.75);
-      border: 2px solid #c8b830;
-      padding: 8px 24px;
-      font-size: 1.1rem;
-      letter-spacing: 0.3em;
-      text-align: center;
-      z-index: 20;
-      pointer-events: none;
-      text-shadow: 0 0 10px #c8b830;
-    }
-    .back-btn {
-      position: absolute;
-      top: 18px;
-      left: 20px;
-      padding: 10px 22px;
-      background: transparent;
-      border: 2px solid #c8b830;
-      color: #c8b830;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.95rem;
-      letter-spacing: 0.2em;
-      cursor: pointer;
-      z-index: 30;
-      transition: all 0.3s;
-    }
-    .back-btn:hover {
-      background: #c8b830;
-      color: #000;
-      box-shadow: 0 0 20px #c8b830;
-    }
-    .warning {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      padding: 10px 30px;
-      font-size: 0.85rem;
-      border: 1px solid #7a7010;
-      color: #e8d840;
-      z-index: 20;
-      pointer-events: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VI HUB — Grand Theft Auto VI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #f5c842;
+  --gold2: #d4a017;
+  --cyan: #00d4ff;
+  --purple: #7b4fce;
+  --pink: #ff4fa3;
+  --bg: #03030a;
+  --bg2: #070712;
+  --bg3: #0c0c1e;
+  --border: #1e1e3a;
+  --text: #c8c6d8;
+  --muted: #5a5878;
+  --white: #f0eeff;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ═══════ STAR CANVAS ═══════ */
+#starfield {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+
+/* ═══════ NAV ═══════ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  height: 56px;
+  background: rgba(3,3,10,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 28px; gap: 20px;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 4px;
+  color: var(--gold);
+  text-shadow: 0 0 24px #f5c84270;
+  flex-shrink: 0;
+}
+.nav-logo span { color: var(--white); }
+
+.nav-links {
+  display: flex; gap: 2px; list-style: none; flex: 1;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 3px;
+  color: var(--muted); transition: color .2s, background .2s;
+}
+.nav-links a:hover { color: var(--cyan); background: #00d4ff0d; }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.live-pill {
+  background: #ff1a1a22; border: 1px solid #ff1a1a60;
+  color: #ff5555;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  padding: 3px 8px; border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+}
+.live-dot { width:6px;height:6px;border-radius:50%;background:#ff4444;animation:blink 1s infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.btn-nav {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 3px;
+  cursor: pointer; transition: all .2s; border: 1px solid;
+}
+.btn-login { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-login:hover { border-color: var(--gold); color: var(--gold); }
+.btn-join { background: var(--gold); color: #03030a; border-color: var(--gold); }
+.btn-join:hover { background: var(--gold2); border-color: var(--gold2); }
+
+/* ═══════ WRAP ═══════ */
+.wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══════ HERO ═══════ */
+.hero {
+  min-height: 92vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 80px 24px 60px;
+  position: relative; z-index: 1;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--cyan);
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after {
+  content:''; flex:1; max-width:60px; height:1px;
+  background: linear-gradient(90deg, transparent, var(--cyan));
+}
+.hero-eyebrow::after { background: linear-gradient(90deg, var(--cyan), transparent); }
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 13vw, 160px);
+  line-height: .88; letter-spacing: 5px;
+  color: var(--white);
+  text-shadow: 0 0 80px #7b4fce50, 0 4px 40px #00000090;
+  margin-bottom: 16px;
+}
+.hero-title .vi {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--gold);
+  text-shadow: 0 0 60px #f5c84260, 0 0 120px #f5c84230;
+}
+
+.hero-subtitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 36px;
+}
+
+.hero-desc {
+  max-width: 620px; margin: 0 auto 40px;
+  font-size: 16px; color: var(--text); line-height: 1.8;
+  font-style: italic;
+}
+
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-hero-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
+  padding: 14px 36px; border-radius: 3px;
+  background: var(--gold); color: #03030a;
+  border: none; cursor: pointer; transition: all .2s;
+}
+.btn-hero-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 30px #f5c84240; }
+.btn-hero-secondary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  padding: 14px 32px; border-radius: 3px;
+  background: transparent; color: var(--cyan);
+  border: 1px solid var(--cyan); cursor: pointer; transition: all .2s;
+}
+.btn-hero-secondary:hover { background: #00d4ff18; transform: translateY(-2px); }
+
+.hero-badges {
+  margin-top: 48px; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;
+}
+.hero-badge {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.badge-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; color: var(--gold);
+  text-shadow: 0 0 20px #f5c84250;
+}
+.badge-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted);
+  animation: floatUD 2s ease-in-out infinite;
+}
+@keyframes floatUD{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.scroll-arrow { width:1px; height:28px; background:linear-gradient(to bottom, transparent, var(--cyan)); }
+
+/* ═══════ SECTION HEADERS ═══════ */
+.sec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px;
+}
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; letter-spacing: 3px; color: var(--white);
+  display: flex; align-items: center; gap: 14px;
+}
+.sec-title::before {
+  content:''; width:3px; height:36px;
+  background: linear-gradient(to bottom, var(--cyan), var(--purple));
+  border-radius: 2px;
+}
+.sec-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--cyan);
+}
+.sec-link:hover { text-decoration: underline; }
+
+section { padding: 80px 0; position: relative; z-index: 1; }
+section + section { border-top: 1px solid var(--border); }
+
+/* ═══════ COUNTDOWN ═══════ */
+.countdown-band {
+  position: relative; z-index: 1;
+  background: linear-gradient(90deg, #0c0c1e, #070718 40%, #0d0720 70%, #0c0c1e);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 24px;
+  text-align: center;
+}
+.cd-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.cd-label span { color: var(--gold); }
+.cd-units { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cd-unit { text-align: center; min-width: 90px; }
+.cd-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 68px; line-height: 1; display: block;
+  color: var(--white);
+  text-shadow: 0 0 30px #00d4ff40;
+}
+.cd-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted);
+}
+.cd-sep {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 60px; color: var(--cyan); opacity: .4; margin-bottom: 18px;
+}
+.cd-platform {
+  margin-top: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══════ STORY SECTION ═══════ */
+.story-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center;
+}
+.story-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px; letter-spacing: 2px; color: var(--white);
+  line-height: .95; margin-bottom: 20px;
+}
+.story-text h2 span { color: var(--cyan); }
+.story-text p { color: var(--text); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+.story-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.story-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; cursor: default;
+}
+.tag-blue { background: #00d4ff15; color: var(--cyan); border: 1px solid #00d4ff30; }
+.tag-purple { background: #7b4fce15; color: #b388ff; border: 1px solid #7b4fce30; }
+.tag-gold { background: #f5c84215; color: var(--gold); border: 1px solid #f5c84230; }
+
+.story-art {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.story-art-inner {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0c0c28 0%, #1a0630 50%, #060e2a 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; padding: 20px;
+}
+.story-art-inner .art-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px; letter-spacing: 6px; color: var(--white);
+  text-shadow: 0 0 60px #7b4fce80;
+}
+.story-art-inner .art-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--cyan);
+}
+.glow-bar {
+  width: 80px; height: 2px; margin: 10px auto 0;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+/* ═══════ TRAILERS ═══════ */
+.trailers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.trailer-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  transition: border-color .3s, transform .3s;
+}
+.trailer-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
+.trailer-card iframe {
+  width: 100%; aspect-ratio: 16/9;
+  display: block; border: none;
+}
+.trailer-card-body { padding: 18px 20px; }
+.trailer-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px;
+  background: #00d4ff15; color: var(--cyan); border: 1px solid #00d4ff40;
+  display: inline-block; margin-bottom: 10px;
+}
+.trailer-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px; letter-spacing: 2px; color: var(--white);
+  margin-bottom: 6px;
+}
+.trailer-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; color: var(--muted); letter-spacing: 1px;
+}
+.trailer-meta span { color: var(--gold); }
+
+/* ═══════ CHARACTERS ═══════ */
+.chars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.char-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color .3s, transform .3s;
+  position: relative;
+}
+.char-card:hover { border-color: var(--purple); transform: translateY(-3px); }
+.char-card:hover .char-glow { opacity: 1; }
+
+.char-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, #7b4fce10, transparent);
+  opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+
+.char-header {
+  padding: 20px 22px 0;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.char-avatar {
+  width: 54px; height: 54px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  border: 2px solid var(--border);
+}
+.char-meta { flex: 1; }
+.char-role {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.char-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; letter-spacing: 2px; color: var(--white);
+  line-height: 1;
+}
+.char-alias {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
+
+.char-body { padding: 16px 22px 20px; flex: 1; }
+.char-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 600; font-style: italic;
+  color: var(--gold);
+  border-left: 2px solid var(--gold);
+  padding-left: 12px; margin-bottom: 12px;
+  line-height: 1.4;
+}
+.char-desc { font-size: 13.5px; color: var(--text); line-height: 1.75; }
+
+.char-footer {
+  padding: 10px 22px 16px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.char-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 20px;
+}
+
+/* avatar color variants */
+.av-gold { background: #f5c84220; border-color: #f5c84240; }
+.av-cyan { background: #00d4ff20; border-color: #00d4ff40; }
+.av-purple { background: #7b4fce20; border-color: #7b4fce40; }
+.av-pink { background: #ff4fa320; border-color: #ff4fa340; }
+.av-green { background: #00e87220; border-color: #00e87240; }
+.av-orange { background: #ff8c2820; border-color: #ff8c2840; }
+.role-proto { color: var(--gold); }
+.role-ally { color: var(--cyan); }
+.role-criminal { color: #ff8c28; }
+.role-legend { color: #b388ff; }
+.role-duo { color: var(--pink); }
+
+/* ═══════ SCREENSHOTS / MEDIA GRID ═══════ */
+.media-masonry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 180px;
+  gap: 10px;
+}
+.media-cell {
+  border-radius: 5px; overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative; cursor: pointer;
+  background: var(--bg3);
+  transition: border-color .3s, transform .3s;
+}
+.media-cell:hover { border-color: var(--cyan); transform: scale(1.02); z-index: 2; }
+.media-cell.wide { grid-column: span 2; }
+.media-cell.tall { grid-row: span 2; }
+.media-cell-inner {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  background: linear-gradient(135deg, #0c0c28, #1a0630 60%, #060e2a);
+  position: relative; overflow: hidden;
+}
+.media-cell-inner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(3,3,10,.7));
+}
+.media-label {
+  position: absolute; bottom: 8px; left: 10px; right: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  color: var(--white); z-index: 1;
+  text-shadow: 0 1px 4px #000;
+}
+.media-tag {
+  position: absolute; top: 8px; right: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px; z-index: 1;
+}
+.mtag-loc { background: #00d4ff22; color: var(--cyan); border: 1px solid #00d4ff40; }
+.mtag-char { background: #f5c84222; color: var(--gold); border: 1px solid #f5c84240; }
+.mtag-act { background: #ff4fa322; color: var(--pink); border: 1px solid #ff4fa340; }
+.mtag-art { background: #7b4fce22; color: #b388ff; border: 1px solid #7b4fce40; }
+
+/* decorative city bg shapes inside cells */
+.city-bg {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden; opacity: .25;
+}
+.city-bg svg { width: 100%; }
+
+/* ═══════ LOCATIONS ═══════ */
+.locs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.loc-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  transition: border-color .3s, transform .3s;
+  cursor: default;
+}
+.loc-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.loc-art {
+  height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+  background: linear-gradient(135deg, #0c1228, #06182a);
+  position: relative; overflow: hidden;
+}
+.loc-art::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 60% 80% at 50% 100%, #00d4ff15, transparent);
+}
+.loc-body { padding: 16px; }
+.loc-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 2px; color: var(--white);
+  margin-bottom: 6px;
+}
+.loc-desc { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+/* ═══════ FOOTER ═══════ */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 40px 0 28px;
+}
+.footer-inner {
+  display: grid; grid-template-columns: 200px 1fr 1fr;
+  gap: 40px; margin-bottom: 36px;
+}
+.footer-brand {}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px; letter-spacing: 3px; color: var(--gold);
+  text-shadow: 0 0 20px #f5c84250;
+  margin-bottom: 8px;
+}
+.footer-logo span { color: var(--white); }
+.footer-tagline { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+.footer-col h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.footer-col a {
+  font-size: 13px; color: var(--text); transition: color .2s;
+}
+.footer-col a:hover { color: var(--cyan); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+}
+.footer-copy { font-size: 11px; color: var(--muted); }
+.footer-socials { display: flex; gap: 12px; }
+.footer-socials a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); transition: color .2s;
+}
+.footer-socials a:hover { color: var(--cyan); }
+
+/* ═══════ LOGIN MODAL ═══════ */
+.modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(1,1,8,.9);
+  backdrop-filter: blur(10px);
+  align-items: center; justify-content: center;
+}
+.modal-backdrop.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  border-radius: 8px;
+  width: 100%; max-width: 440px;
+  padding: 40px 36px;
+  position: relative;
+  animation: mIn .25s ease;
+  box-shadow: 0 40px 100px #00000090, 0 0 0 1px var(--border);
+}
+@keyframes mIn{from{transform:scale(.94) translateY(-12px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+
+.modal-stars {
+  position: absolute; inset: 0; border-radius: 8px; overflow: hidden; pointer-events: none;
+}
+.modal-close {
+  position: absolute; top:14px; right:16px;
+  background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;
+  transition: color .2s;
+}
+.modal-close:hover { color: var(--white); }
+
+.modal-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 38px; letter-spacing: 4px;
+  color: var(--gold); text-align: center;
+  text-shadow: 0 0 40px #f5c84250;
+  margin-bottom: 4px;
+}
+.modal-logo span { color: var(--white); }
+.modal-tagline {
+  text-align: center; font-size: 11px; font-family: 'Barlow Condensed',sans-serif;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.modal-tabs { display:flex; border-bottom:1px solid var(--border); margin:0 -36px 24px; padding:0 36px; }
+.mtab {
+  flex:1; padding:10px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  background:none;border:none;border-bottom:2px solid transparent;
+  margin-bottom:-1px; color:var(--muted); cursor:pointer; transition:all .2s;
+}
+.mtab.on { color:var(--gold); border-bottom-color:var(--gold); }
+
+.mpanel { display:none; }
+.mpanel.on { display:block; }
+
+.fg { margin-bottom:16px; }
+.fl { display:block; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.fi {
+  width:100%; padding:10px 14px;
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:3px; color:var(--white);
+  font-family:'Barlow',sans-serif; font-size:14px;
+  outline:none; transition:border-color .2s;
+}
+.fi:focus { border-color:var(--gold); }
+.fi::placeholder { color:#35334e; }
+.frow { display:flex; gap:12px; }
+.frow .fg { flex:1; }
+
+.forgot { display:block; text-align:right; font-size:12px; color:var(--muted); margin-top:-10px; margin-bottom:16px; }
+.forgot:hover { color:var(--gold); }
+
+.bsubmit {
+  width:100%; padding:13px;
+  background:var(--gold); color:#03030a;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:900;letter-spacing:3px;text-transform:uppercase;
+  border:none;border-radius:3px;cursor:pointer;transition:background .2s;
+}
+.bsubmit:hover { background:var(--gold2); }
+
+.divider { display:flex;align-items:center;gap:12px;margin:18px 0; font-size:11px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase; }
+.divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--border); }
+
+.bdiscord {
+  width:100%;padding:12px;
+  background:#5865F2;color:#fff;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  border:none;border-radius:3px;cursor:pointer;transition:background .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.bdiscord:hover { background:#4752c4; }
+
+.check-row { display:flex;gap:8px;align-items:flex-start;margin-top:12px; font-size:12px;color:var(--muted); }
+.check-row input { margin-top:2px; accent-color:var(--gold); }
+.check-row a { color:var(--gold); }
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:900px){
+  .main-grid,.story-grid,.trailers-grid,.footer-inner{ grid-template-columns:1fr; }
+  .media-masonry { grid-template-columns:repeat(2,1fr); }
+  .locs-grid { grid-template-columns:1fr 1fr; }
+  .nav-links { display:none; }
+  .hero-title { font-size:72px; }
+  .media-cell.wide { grid-column:span 1; }
+}
+@media(max-width:600px){
+  .locs-grid,.chars-grid{ grid-template-columns:1fr; }
+  .media-masonry { grid-template-columns:1fr; }
+  .cd-num { font-size:52px; }
+}
+
+/* fade-in */
+.fi-anim { opacity:0; transform:translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.fi-anim.vis { opacity:1; transform:translateY(0); }
+</style>
 </head>
 <body>
 
-  <button class="back-btn" onclick="window.location.href='/'">← BACK TO MENU</button>
+<!-- ═══════ STAR CANVAS ═══════ -->
+<canvas id="starfield"></canvas>
 
-  <div class="header">THE BACKROOMS — LEVEL 0</div>
-
-  <!-- Unity Backrooms Game -->
-  <iframe 
-    src="https://play.unity.com/mg/other/the-backrooms" 
-    allow="fullscreen; accelerometer; gyroscope; magnetometer; vr; xr-spatial-tracking;"
-    allowfullscreen>
-  </iframe>
-
-  <div class="overlay"></div>
-  <div class="warning">
-    WEAR HEADPHONES • FULLSCREEN RECOMMENDED • MOUSE TO LOOK • WASD TO MOVE
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo">VI<span>HUB</span></div>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#trailers">Trailers</a></li>
+    <li><a href="#characters">Characters</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#locations">Locations</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="live-pill"><div class="live-dot"></div>LIVE</div>
+    <button class="btn-nav btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-nav btn-join" onclick="openModal('register')">Join Free</button>
   </div>
+</nav>
 
+<!-- ═══════ HERO ═══════ -->
+<section style="padding:0;border:none;">
+  <div class="hero">
+    <div class="hero-eyebrow">THE MOST COMPLETE GTA VI COMMUNITY</div>
+    <h1 class="hero-title">GRAND THEFT<br>AUTO <span class="vi">VI</span></h1>
+    <p class="hero-subtitle">Vice City · State of Leonida · November 19, 2026</p>
+    <p class="hero-desc">Jason and Lucia have always known the deck is stacked against them. But when an easy score goes wrong, they find themselves on the darkest side of the sunniest place in America.</p>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="document.getElementById('trailers').scrollIntoView({behavior:'smooth'})">Watch Trailers</button>
+      <button class="btn-hero-secondary" onclick="document.getElementById('characters').scrollIntoView({behavior:'smooth'})">Meet the Cast</button>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="badge-val">90M+</span><span class="badge-lbl">Trailer 1 Views / 24h</span></div>
+      <div class="hero-badge"><span class="badge-val">NOV 19</span><span class="badge-lbl">Release Date 2026</span></div>
+      <div class="hero-badge"><span class="badge-val">PS5 / XSX</span><span class="badge-lbl">Platforms</span></div>
+      <div class="hero-badge"><span class="badge-val">13 YRS</span><span class="badge-lbl">Since GTA V</span></div>
+    </div>
+    <div class="scroll-hint"><div class="scroll-arrow"></div>SCROLL</div>
+  </div>
+</section>
+
+<!-- ═══════ COUNTDOWN ═══════ -->
+<div class="countdown-band">
+  <div class="cd-label">GTA VI LAUNCHES — <span>NOVEMBER 19, 2026</span></div>
+  <div class="cd-units">
+    <div class="cd-unit"><span class="cd-num" id="cdd">000</span><span class="cd-name">Days</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cdh">00</span><span class="cd-name">Hours</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cdm">00</span><span class="cd-name">Minutes</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cds">00</span><span class="cd-name">Seconds</span></div>
+  </div>
+  <div class="cd-platform">PlayStation 5 &amp; Xbox Series X|S · Captured on PS5</div>
+</div>
+
+<!-- ═══════ STORY ═══════ -->
+<section id="story">
+  <div class="wrap fi-anim">
+    <div class="story-grid">
+      <div class="story-text">
+        <h2>VICE CITY,<br><span>USA</span></h2>
+        <p>Grand Theft Auto VI heads to the state of Leonida, home to the neon-soaked streets of Vice City and beyond — in the biggest, most immersive evolution of the Grand Theft Auto series yet.</p>
+        <p>Jason and Lucia have always known the deck is stacked against them. But when an easy score goes wrong, they find themselves on the darkest side of the sunniest place in America, in the middle of a criminal conspiracy stretching across the state of Leonida — forced to rely on each other more than ever if they want to make it out alive.</p>
+        <p>Inspired by the Bonnie and Clyde era of American crime, GTA VI delivers a grounded, character-driven narrative focused on consequences, loyalty, and survival in a volatile modern world saturated with social media, viral fame, and institutional corruption.</p>
+        <div class="story-tags">
+          <span class="story-tag tag-blue">Open World</span>
+          <span class="story-tag tag-purple">Dual Protagonists</span>
+          <span class="story-tag tag-gold">Crime Drama</span>
+          <span class="story-tag tag-blue">Vice City</span>
+          <span class="story-tag tag-purple">First Female Lead</span>
+          <span class="story-tag tag-gold">Bonnie &amp; Clyde Inspired</span>
+        </div>
+      </div>
+      <div class="story-art">
+        <div class="story-art-inner">
+          <div class="art-label">LEONIDA</div>
+          <div class="art-sub">State of Vice City &amp; Beyond</div>
+          <div class="glow-bar"></div>
+          <p style="font-size:13px;color:#5a5878;text-align:center;margin-top:10px;max-width:300px;line-height:1.6;">Vice City · Leonida Keys · Grassrivers<br>Port Gellhorn · Ambrosia · Mount Kalaga</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TRAILERS ═══════ -->
+<section id="trailers">
+  <div class="wrap fi-anim">
+    <div class="sec-header">
+      <div class="sec-title">OFFICIAL TRAILERS</div>
+      <a class="sec-link" href="https://www.rockstargames.com/VI" target="_blank">rockstargames.com/VI ↗</a>
+    </div>
+    <div class="trailers-grid">
+      <div class="trailer-card">
+        <iframe src="https://www.youtube.com/embed/QdBZExpgErs" allowfullscreen loading="lazy" title="GTA VI Trailer 1"></iframe>
+        <div class="trailer-card-body">
+          <div class="trailer-badge">OFFICIAL TRAILER 1</div>
+          <div class="trailer-title">Grand Theft Auto VI — Trailer 1</div>
+          <div class="trailer-meta">Released December 4, 2023 &nbsp;·&nbsp; <span>90M+ views in 24hrs</span> &nbsp;·&nbsp; 🎵 Love Is a Long Road — Tom Petty</div>
+        </div>
+      </div>
+      <div class="trailer-card">
+        <iframe src="https://www.youtube.com/embed/pZgMpjjgCRA" allowfullscreen loading="lazy" title="GTA VI Trailer 2"></iframe>
+        <div class="trailer-card-body">
+          <div class="trailer-badge">OFFICIAL TRAILER 2</div>
+          <div class="trailer-title">Grand Theft Auto VI — Trailer 2</div>
+          <div class="trailer-meta">Released May 6, 2025 &nbsp;·&nbsp; <span>100M+ views in 1 week</span> &nbsp;·&nbsp; Captured on PlayStation 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CHARACTERS ═══════ -->
+<section id="characters">
+  <div class="wrap fi-anim">
+    <div class="sec-header">
+      <div class="sec-title">THE CAST</div>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--muted);letter-spacing:1px;">OFFICIAL CHARACTER BIOS FROM ROCKSTAR GAMES</span>
+    </div>
+    <div class="chars-grid">
+
+      <!-- JASON -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-gold">🧔</div>
+          <div class="char-meta">
+            <div class="char-role role-proto">★ PROTAGONIST</div>
+            <div class="char-name">JASON DUVAL</div>
+            <div class="char-alias">The Keys · Criminal Enforcer</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"Another day in paradise, right?"</div>
+          <div class="char-desc">Jason wants an easy life, but things just keep getting harder. Jason grew up around grifters and crooks. After a stint in the Army trying to shake off his troubled teens, he found himself in the Keys doing what he knows best — working for local drug runners. It might be time to try something new. Meeting Lucia could be the best or worst thing to ever happen to him. Jason knows how he'd like it to turn out, but right now, it's hard to tell.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag tag-gold">Playable</span>
+          <span class="char-tag tag-blue">Army Veteran</span>
+          <span class="char-tag tag-purple">Drug Runner</span>
+        </div>
+      </div>
+
+      <!-- LUCIA -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-cyan">👩</div>
+          <div class="char-meta">
+            <div class="char-role role-proto">★ PROTAGONIST</div>
+            <div class="char-name">LUCIA CAMINOS</div>
+            <div class="char-alias">First Female Lead in Modern GTA</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"Only smart moves from here."</div>
+          <div class="char-desc">Lucia's father taught her to fight as soon as she could walk. Life has been coming at her swinging ever since. Fighting for her family landed her in the Leonida Penitentiary. Sheer luck got her out. More than anything, Lucia wants the good life her mom has dreamed of since their days in Liberty City — but instead of half-baked fantasies, Lucia is prepared to take matters into her own hands. Fresh out of prison and ready to change the odds in her favor, Lucia's committed to her plan — no matter what it takes. A life with Jason could be her way out.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag tag-gold">Playable</span>
+          <span class="char-tag tag-blue">Latina Protagonist</span>
+          <span class="char-tag tag-purple">Ex-Con</span>
+        </div>
+      </div>
+
+      <!-- BRIAN HEDER -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-orange">🧓</div>
+          <div class="char-meta">
+            <div class="char-role role-criminal">◆ CRIMINAL BOSS</div>
+            <div class="char-name">BRIAN HEDER</div>
+            <div class="char-alias">Brian's Boat Works &amp; Marina</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"Brian's been around long enough to let others do his dirty work."</div>
+          <div class="char-desc">Brian's a classic drug runner from the golden age of smuggling in the Keys. Still moving product through his boat yard with his third wife, Lori, Brian has an extensive history as a drug runner and currently oversees a network of criminals while keeping his own hands relatively clean. Brian's letting Jason live rent-free at one of his properties — so long as he helps with local shakedowns, and stops by for Lori's sangria once in a while. Housed in his boatyard is a seaplane, his vehicle of choice in his drug-running days.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag tag-purple">Mentor Figure</span>
+          <span class="char-tag" style="background:#ff8c2815;color:#ff8c28;border:1px solid #ff8c2830;">Smuggler</span>
+          <span class="char-tag tag-blue">Boatyard</span>
+        </div>
+      </div>
+
+      <!-- CAL HAMPTON -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-purple">🕵️</div>
+          <div class="char-meta">
+            <div class="char-role role-ally">● ALLY</div>
+            <div class="char-name">CAL HAMPTON</div>
+            <div class="char-alias">Coast Guard Conspiracy Theorist</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"What if everything on the internet was true?"</div>
+          <div class="char-desc">Jason's friend and a fellow associate of Brian's, Cal feels safest hanging at home, snooping on Coast Guard comms with a few beers and some private browser tabs open. The psychopaths are in charge. Get used to it. Cal is at the low tide of America and happy there. Casual paranoia loves company, but his friend Jason has bigger plans. Somewhat of an eccentric, devil-may-care conspiracy theorist entrenched in everyday paranoia — Cal's penchant for eavesdropping on Coast Guard communications ought to make him a useful ally. He's the Lester of GTA 6.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag tag-purple">Conspiracy Theorist</span>
+          <span class="char-tag tag-blue">Intel Source</span>
+          <span class="char-tag tag-gold">Jason's Ally</span>
+        </div>
+      </div>
+
+      <!-- BOOBIE IKE -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-gold">👑</div>
+          <div class="char-meta">
+            <div class="char-role role-legend">◈ VICE CITY LEGEND</div>
+            <div class="char-name">BOOBIE IKE</div>
+            <div class="char-alias">Jack of Hearts · Only Raw Records</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"It's all about heart — the Jack of Hearts."</div>
+          <div class="char-desc">Boobie is a local Vice City legend — and acts like it. One of the few to transform his time in the streets into a legitimate empire spanning real estate, a strip club, and a recording studio — Boobie's all smiles until it's time to talk business. Boobie Ike transcended the rough-and-tumble street lifestyle of his youth and emerged a successful, influential Vice City mogul. His most recent endeavor, Only Raw Records, is his greatest passion, and together with Dre'Quan Priest, Boobie hopes to make a splash in the music industry.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag" style="background:#b388ff18;color:#b388ff;border:1px solid #b388ff30;">Music Mogul</span>
+          <span class="char-tag tag-gold">Strip Club Owner</span>
+          <span class="char-tag tag-blue">Real Estate</span>
+        </div>
+      </div>
+
+      <!-- DRE'QUAN -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-green">🎤</div>
+          <div class="char-meta">
+            <div class="char-role role-ally">● SUPPORTING</div>
+            <div class="char-name">DRE'QUAN PRIEST</div>
+            <div class="char-alias">Only Raw Records · Aspiring Mogul</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"The club money pay for the studio, and the drug money pay for it all."</div>
+          <div class="char-desc">Even when he was dealing on the streets to make ends meet, breaking into music was always the goal. Now that he's signed the Real Dimez, Dre'Quan's days of booking acts into Boobie's strip club might be numbered as he sets his sights on bigger things. Boobie Ike's business partner and prized recording artist, Dre'Quan doesn't view music as a means to an end — he has a real, enduring passion for the craft, unlike other musician characters in previous GTA games. He's an ambitious hustler to the bone, and will be an asset — or perhaps a liability — for Jason and Lucia.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag" style="background:#00e87218;color:#00e872;border:1px solid #00e87230;">Music Artist</span>
+          <span class="char-tag tag-purple">Signed Artist</span>
+          <span class="char-tag tag-gold">Wildcard</span>
+        </div>
+      </div>
+
+      <!-- REAL DIMEZ -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-pink">🎵</div>
+          <div class="char-meta">
+            <div class="char-role role-duo">♦ DUO</div>
+            <div class="char-name">REAL DIMEZ</div>
+            <div class="char-alias">Bae-Luxe &amp; Roxy · Only Raw Records</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"All my dimes in this club. Meet my twin, make it a dub."</div>
+          <div class="char-desc">Bae-Luxe and Roxy aka Real Dimez have been friends since high school — girls with the savvy to turn their time shaking down local dealers into cold, hard cash via spicy rap tracks and a relentless social media presence. An early hit single with local rapper DWNPLY took Real Dimez to new heights. Now, after five years and a whole lot of trouble, they're signed to Only Raw Records, hoping lightning can strike twice. Viral videos. Viral hooks. One more hit and the whole city's theirs.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag" style="background:#ff4fa318;color:#ff4fa3;border:1px solid #ff4fa330;">Rap Duo</span>
+          <span class="char-tag tag-blue">Social Media</span>
+          <span class="char-tag tag-gold">Signed Artists</span>
+        </div>
+      </div>
+
+      <!-- RAUL BAUTISTA -->
+      <div class="char-card">
+        <div class="char-glow"></div>
+        <div class="char-header">
+          <div class="char-avatar av-cyan">🔫</div>
+          <div class="char-meta">
+            <div class="char-role role-criminal">◆ SEASONED CRIMINAL</div>
+            <div class="char-name">RAUL BAUTISTA</div>
+            <div class="char-alias">Bank Robber · Always Hunting Talent</div>
+          </div>
+        </div>
+        <div class="char-body">
+          <div class="char-quote">"A professional adapts. Life is full of surprises, my friend."</div>
+          <div class="char-desc">Confidence, charm, and cunning — Raul's a seasoned bank robber always on the hunt for talent ready to take the risks that bring the biggest rewards. Described as both charming and reckless, Raul has led more heists than most have dreamed of — and he's always scouting for the next hungry recruit. Raul's recklessness raises the stakes with every score. Sooner or later, his crew will have to double down or pull their chips from the table. Like Brian Heder, Raul is a seasoned, wizened career criminal set up to be a galvanizing force in the story — and looks set to send Lucia and Jason into their biggest jobs yet.</div>
+        </div>
+        <div class="char-footer">
+          <span class="char-tag tag-purple">Bank Robber</span>
+          <span class="char-tag tag-blue">Recruiter</span>
+          <span class="char-tag" style="background:#ff4fa318;color:#ff4fa3;border:1px solid #ff4fa330;">High Stakes</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MEDIA / SCREENSHOTS ═══════ -->
+<section id="media">
+  <div class="wrap fi-anim">
+    <div class="sec-header">
+      <div class="sec-title">MEDIA &amp; SCREENSHOTS</div>
+      <a class="sec-link" href="https://www.rockstargames.com/VI" target="_blank">View all on Rockstar ↗</a>
+    </div>
+    <div class="media-masonry">
+
+      <div class="media-cell wide tall">
+        <div class="media-cell-inner">
+          <div class="city-bg"><svg viewBox="0 0 400 200" fill="none"><rect x="10" y="80" width="40" height="120" fill="#00d4ff08"/><rect x="60" y="40" width="30" height="160" fill="#00d4ff10"/><rect x="100" y="60" width="50" height="140" fill="#00d4ff08"/><rect x="160" y="20" width="60" height="180" fill="#00d4ff12"/><rect x="230" y="50" width="40" height="150" fill="#00d4ff08"/><rect x="280" y="30" width="70" height="170" fill="#00d4ff10"/><rect x="360" y="70" width="30" height="130" fill="#00d4ff08"/></svg></div>
+          🌃
+          <div class="media-label">Vice City — Ocean Beach &amp; Neon Skyline</div>
+          <div class="media-tag mtag-loc">VICE CITY</div>
+        </div>
+      </div>
+
+      <div class="media-cell">
+        <div class="media-cell-inner">🧔<div class="media-label">Jason Duval — Official Art</div><div class="media-tag mtag-char">JASON</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">👩<div class="media-label">Lucia Caminos — Official Art</div><div class="media-tag mtag-char">LUCIA</div></div>
+      </div>
+
+      <div class="media-cell">
+        <div class="media-cell-inner">🚁<div class="media-label">Police Helicopter Chase Scene</div><div class="media-tag mtag-act">ACTION</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🌴<div class="media-label">Leonida Keys — Coastal Route</div><div class="media-tag mtag-loc">KEYS</div></div>
+      </div>
+
+      <div class="media-cell wide">
+        <div class="media-cell-inner">
+          <div class="city-bg"><svg viewBox="0 0 400 100" fill="none"><ellipse cx="200" cy="100" rx="200" ry="60" fill="#f5c84208"/></svg></div>
+          🏖️
+          <div class="media-label">Grassrivers — Swamp &amp; Rural Leonida</div>
+          <div class="media-tag mtag-loc">GRASSRIVERS</div>
+        </div>
+      </div>
+
+      <div class="media-cell tall">
+        <div class="media-cell-inner">🏦<div class="media-label">Bank Heist — Raul Bautista's Crew</div><div class="media-tag mtag-act">HEIST</div></div>
+      </div>
+
+      <div class="media-cell">
+        <div class="media-cell-inner">🚤<div class="media-label">Brian's Boatyard &amp; Marina</div><div class="media-tag mtag-loc">KEYS</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🎤<div class="media-label">Real Dimez — Studio Session</div><div class="media-tag mtag-char">REAL DIMEZ</div></div>
+      </div>
+
+      <div class="media-cell">
+        <div class="media-cell-inner">🌅<div class="media-label">Port Gellhorn — Harbor at Dusk</div><div class="media-tag mtag-loc">PORT</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🚗<div class="media-label">Vice City Street Racing</div><div class="media-tag mtag-act">GAMEPLAY</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🎆<div class="media-label">Ambrosia — Night District</div><div class="media-tag mtag-loc">AMBROSIA</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🏔️<div class="media-label">Mount Kalaga National Park</div><div class="media-tag mtag-loc">MT KALAGA</div></div>
+      </div>
+
+      <div class="media-cell wide">
+        <div class="media-cell-inner">
+          🎨
+          <div class="media-label">Official Key Art — Jason &amp; Lucia</div>
+          <div class="media-tag mtag-art">KEY ART</div>
+        </div>
+      </div>
+
+      <div class="media-cell">
+        <div class="media-cell-inner">👑<div class="media-label">Boobie Ike — Jack of Hearts</div><div class="media-tag mtag-char">BOOBIE IKE</div></div>
+      </div>
+      <div class="media-cell">
+        <div class="media-cell-inner">🏢<div class="media-label">Little Cuba — Panadería District</div><div class="media-tag mtag-loc">LITTLE CUBA</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LOCATIONS ═══════ -->
+<section id="locations">
+  <div class="wrap fi-anim">
+    <div class="sec-header">
+      <div class="sec-title">STATE OF LEONIDA</div>
+    </div>
+    <div class="locs-grid">
+      <div class="loc-card">
+        <div class="loc-art">🌆</div>
+        <div class="loc-body">
+          <div class="loc-name">VICE CITY</div>
+          <div class="loc-desc">The glamour, hustle, and greed of America captured in a single city. Each neighborhood has something to offer — from the pastel art deco hotels and bright white sands of Ocean Beach, to the bustling panaderías of Little Cuba and the bootleg brands of the Tisha-Wocka flea market, out to the VC Port, the cruise ship capital of the world.</div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="loc-art">🌴</div>
+        <div class="loc-body">
+          <div class="loc-name">LEONIDA KEYS</div>
+          <div class="loc-desc">A chain of sun-drenched islands stretching south from the mainland. Home to Brian Heder's boatyard, Jason's residence, and the laid-back criminal networks that run drugs through the labyrinthine waterways. Life here moves slow — until it doesn't.</div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="loc-art">🌿</div>
+        <div class="loc-body">
+          <div class="loc-name">GRASSRIVERS</div>
+          <div class="loc-desc">Vast wetlands and swamp country stretching across central Leonida. Inspired by the Florida Everglades, this region is thick with wildlife, hidden criminal operations, and backwater communities far removed from the neon glow of Vice City.</div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="loc-art">⚓</div>
+        <div class="loc-body">
+          <div class="loc-name">PORT GELLHORN</div>
+          <div class="loc-desc">An industrial port city on the western coast of Leonida. The lifeblood of the state's commercial shipping industry, Port Gellhorn is also a key node in the region's underground smuggling routes and serves as a gateway for criminal enterprise.</div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="loc-art">🎰</div>
+        <div class="loc-body">
+          <div class="loc-name">AMBROSIA</div>
+          <div class="loc-desc">A sprawling entertainment and nightlife district. Ambrosia buzzes with casinos, clubs, and the kind of excess that attracts both opportunity and danger. Its glittering façade masks a complex web of criminal interests and political corruption beneath the surface.</div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="loc-art">🏔️</div>
+        <div class="loc-body">
+          <div class="loc-name">MOUNT KALAGA</div>
+          <div class="loc-desc">A towering national park in the northern reaches of Leonida. Dense forests, rugged terrain, and sweeping vistas contrast sharply with Vice City's urban sprawl. Mount Kalaga offers refuge — and isolation — for those who want to disappear from the world entirely.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">VI<span>HUB</span></div>
+        <div class="footer-tagline">The most complete Grand Theft Auto VI community on the internet. Not affiliated with Rockstar Games or Take-Two Interactive.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#trailers">Trailers</a></li>
+          <li><a href="#characters">Characters</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#locations">Locations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="#">Forum</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Articles</a></li>
+          <li><a href="#">Submit Tip</a></li>
+          <li><a href="#">Terms &amp; Privacy</a></li>
+          <li><a href="https://www.rockstargames.com/VI" target="_blank">Official Site ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 VI HUB — Not affiliated with Rockstar Games or Take-Two Interactive.</div>
+      <div class="footer-socials">
+        <a href="#">Reddit</a>
+        <a href="#">Discord</a>
+        <a href="#">YouTube</a>
+        <a href="#">Twitter/X</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════ LOGIN MODAL ═══════ -->
+<div class="modal-backdrop" id="mbg" onclick="closeOuter(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-logo">VI<span>HUB</span></div>
+    <div class="modal-tagline">Grand Theft Auto VI Community</div>
+
+    <div class="modal-tabs">
+      <button class="mtab on" id="tl" onclick="swTab('login')">LOGIN</button>
+      <button class="mtab" id="tr" onclick="swTab('register')">REGISTER</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="mpanel on" id="pl">
+      <div class="fg"><label class="fl">Username or Email</label><input class="fi" type="text" placeholder="your@email.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" placeholder="••••••••"></div>
+      <a class="forgot" href="#">Forgot password?</a>
+      <button class="bsubmit">SIGN IN</button>
+      <div class="divider">or</div>
+      <button class="bdiscord">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M13.545 1.008A13.3 13.3 0 0010.26 0a.05.05 0 00-.052.025c-.141.25-.298.576-.407.832a12.28 12.28 0 00-3.6 0A8.492 8.492 0 005.8.025.051.051 0 005.748 0a13.31 13.31 0 00-3.286 1.008.046.046 0 00-.021.018C.378 4.278-.226 7.443.07 10.57a.054.054 0 00.02.037 13.36 13.36 0 004.02 2.03.051.051 0 00.056-.019c.31-.423.587-.869.823-1.337a.05.05 0 00-.028-.07 8.8 8.8 0 01-1.254-.596.051.051 0 01-.005-.085c.084-.063.168-.128.248-.195a.049.049 0 01.051-.007c2.632 1.2 5.48 1.2 8.08 0a.049.049 0 01.052.006c.08.067.164.133.249.196a.051.051 0 01-.004.085c-.4.234-.818.432-1.255.595a.05.05 0 00-.027.071c.24.467.517.913.822 1.336a.05.05 0 00.056.02 13.32 13.32 0 004.023-2.03.052.052 0 00.02-.037c.334-3.451-.559-6.59-2.366-9.544a.04.04 0 00-.02-.019z" fill="#fff"/></svg>
+        CONTINUE WITH DISCORD
+      </button>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="mpanel" id="pr">
+      <div class="frow">
+        <div class="fg"><label class="fl">Username</label><input class="fi" type="text" placeholder="CopiumKing99"></div>
+        <div class="fg"><label class="fl">Display Name</label><input class="fi" type="text" placeholder="Jason Bourne"></div>
+      </div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" placeholder="your@email.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" placeholder="Min. 8 characters"></div>
+      <div class="check-row"><input type="checkbox" id="tc"><label for="tc">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label></div>
+      <button class="bsubmit" style="margin-top:16px;">CREATE ACCOUNT</button>
+      <div class="divider">or</div>
+      <button class="bdiscord">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M13.545 1.008A13.3 13.3 0 0010.26 0a.05.05 0 00-.052.025c-.141.25-.298.576-.407.832a12.28 12.28 0 00-3.6 0A8.492 8.492 0 005.8.025.051.051 0 005.748 0a13.31 13.31 0 00-3.286 1.008.046.046 0 00-.021.018C.378 4.278-.226 7.443.07 10.57a.054.054 0 00.02.037 13.36 13.36 0 004.02 2.03.051.051 0 00.056-.019c.31-.423.587-.869.823-1.337a.05.05 0 00-.028-.07 8.8 8.8 0 01-1.254-.596.051.051 0 01-.005-.085c.084-.063.168-.128.248-.195a.049.049 0 01.051-.007c2.632 1.2 5.48 1.2 8.08 0a.049.049 0 01.052.006c.08.067.164.133.249.196a.051.051 0 01-.004.085c-.4.234-.818.432-1.255.595a.05.05 0 00-.027.071c.24.467.517.913.822 1.336a.05.05 0 00.056.02 13.32 13.32 0 004.023-2.03.052.052 0 00.02-.037c.334-3.451-.559-6.59-2.366-9.544a.04.04 0 00-.02-.019z" fill="#fff"/></svg>
+        SIGN UP WITH DISCORD
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── STARFIELD ── */
+(function(){
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let W, H, stars=[], nebulas=[];
+
+  function resize(){
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // stars
+  for(let i=0;i<320;i++){
+    stars.push({
+      x: Math.random(), y: Math.random(),
+      r: Math.random()*1.5+.2,
+      a: Math.random(),
+      speed: Math.random()*.0003+.0001,
+      twinkle: Math.random()*Math.PI*2
+    });
+  }
+  // nebula blobs
+  const nebulaColors = ['#7b4fce','#00d4ff','#ff4fa3','#1a0040','#003366'];
+  for(let i=0;i<6;i++){
+    nebulas.push({
+      x: Math.random(), y: Math.random(),
+      rx: Math.random()*500+200,
+      ry: Math.random()*300+100,
+      color: nebulaColors[i%nebulaColors.length],
+      a: Math.random()*.06+.02
+    });
+  }
+
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // nebulas
+    nebulas.forEach(n=>{
+      const grd = ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.rx);
+      grd.addColorStop(0, n.color+'44');
+      grd.addColorStop(1, 'transparent');
+      ctx.save();
+      ctx.scale(1, n.ry/n.rx);
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(n.x*W, n.y*H*(n.rx/n.ry), n.rx, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // stars
+    t += .008;
+    stars.forEach(s=>{
+      const alpha = (Math.sin(s.twinkle + t*s.speed*300)*0.4+0.6)*s.a;
+      ctx.beginPath();
+      ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(200,220,255,${alpha})`;
+      ctx.fill();
+    });
+
+    // shooting star occasionally
+    if(Math.random()<.002){
+      const sx=Math.random()*W, sy=Math.random()*H*0.5;
+      const grad = ctx.createLinearGradient(sx,sy,sx+80,sy+20);
+      grad.addColorStop(0,'rgba(255,255,255,0)');
+      grad.addColorStop(.5,'rgba(200,230,255,.8)');
+      grad.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.strokeStyle=grad; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(sx+80,sy+20);
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── COUNTDOWN ── */
+function tick(){
+  const d=new Date('2026-11-19T00:00:00');
+  const n=new Date();
+  const diff=d-n;
+  if(diff<=0)return;
+  const days=Math.floor(diff/86400000);
+  const hrs=Math.floor((diff%86400000)/3600000);
+  const min=Math.floor((diff%3600000)/60000);
+  const sec=Math.floor((diff%60000)/1000);
+  document.getElementById('cdd').textContent=String(days).padStart(3,'0');
+  document.getElementById('cdh').textContent=String(hrs).padStart(2,'0');
+  document.getElementById('cdm').textContent=String(min).padStart(2,'0');
+  document.getElementById('cds').textContent=String(sec).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+/* ── MODAL ── */
+function openModal(tab){
+  document.getElementById('mbg').classList.add('open');
+  swTab(tab||'login');
+}
+function closeModal(){ document.getElementById('mbg').classList.remove('open'); }
+function closeOuter(e){ if(e.target===document.getElementById('mbg')) closeModal(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+function swTab(t){
+  document.getElementById('tl').classList.toggle('on',t==='login');
+  document.getElementById('tr').classList.toggle('on',t==='register');
+  document.getElementById('pl').classList.toggle('on',t==='login');
+  document.getElementById('pr').classList.toggle('on',t==='register');
+}
+
+/* ── SCROLL FADE-IN ── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.1});
+document.querySelectorAll('.fi-anim').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
