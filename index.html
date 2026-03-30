@@ -1,12 +1,10 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VI HUB — Grand Theft Auto VI</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --gold: #f5c842;
@@ -22,8 +20,10 @@
   --muted: #5a5878;
   --white: #f0eeff;
 }
+
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -33,11 +33,13 @@ body {
   overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
+
 /* ═══════ STAR CANVAS ═══════ */
 #starfield {
   position: fixed; inset: 0; z-index: 0;
   pointer-events: none;
 }
+
 /* ═══════ NAV ═══════ */
 nav {
   position: sticky; top: 0; z-index: 200;
@@ -56,6 +58,7 @@ nav {
   flex-shrink: 0;
 }
 .nav-logo span { color: var(--white); }
+
 .nav-links {
   display: flex; gap: 2px; list-style: none; flex: 1;
 }
@@ -67,6 +70,7 @@ nav {
   color: var(--muted); transition: color .2s, background .2s;
 }
 .nav-links a:hover { color: var(--cyan); background: #00d4ff0d; }
+
 .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .live-pill {
   background: #ff1a1a22; border: 1px solid #ff1a1a60;
@@ -78,6 +82,7 @@ nav {
 }
 .live-dot { width:6px;height:6px;border-radius:50%;background:#ff4444;animation:blink 1s infinite; }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
 .btn-nav {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
@@ -88,8 +93,10 @@ nav {
 .btn-login:hover { border-color: var(--gold); color: var(--gold); }
 .btn-join { background: var(--gold); color: #03030a; border-color: var(--gold); }
 .btn-join:hover { background: var(--gold2); border-color: var(--gold2); }
+
 /* ═══════ WRAP ═══════ */
 .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
 /* ═══════ HERO ═══════ */
 .hero {
   min-height: 92vh;
@@ -98,6 +105,7 @@ nav {
   text-align: center; padding: 80px 24px 60px;
   position: relative; z-index: 1;
 }
+
 .hero-eyebrow {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase;
@@ -110,6 +118,7 @@ nav {
   background: linear-gradient(90deg, transparent, var(--cyan));
 }
 .hero-eyebrow::after { background: linear-gradient(90deg, var(--cyan), transparent); }
+
 .hero-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(80px, 13vw, 160px);
@@ -123,16 +132,19 @@ nav {
   -webkit-text-stroke: 2px var(--gold);
   text-shadow: 0 0 60px #f5c84260, 0 0 120px #f5c84230;
 }
+
 .hero-subtitle {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 16px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
   color: var(--muted); margin-bottom: 36px;
 }
+
 .hero-desc {
   max-width: 620px; margin: 0 auto 40px;
   font-size: 16px; color: var(--text); line-height: 1.8;
   font-style: italic;
 }
+
 .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn-hero-primary {
   font-family: 'Barlow Condensed', sans-serif;
@@ -150,6 +162,7 @@ nav {
   border: 1px solid var(--cyan); cursor: pointer; transition: all .2s;
 }
 .btn-hero-secondary:hover { background: #00d4ff18; transform: translateY(-2px); }
+
 .hero-badges {
   margin-top: 48px; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;
 }
@@ -166,6 +179,7 @@ nav {
   font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
   color: var(--muted);
 }
+
 /* Scroll indicator */
 .scroll-hint {
   position: absolute; bottom: 28px; left: 50%;
@@ -178,6 +192,7 @@ nav {
 }
 @keyframes floatUD{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
 .scroll-arrow { width:1px; height:28px; background:linear-gradient(to bottom, transparent, var(--cyan)); }
+
 /* ═══════ SECTION HEADERS ═══════ */
 .sec-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -199,8 +214,10 @@ nav {
   color: var(--cyan);
 }
 .sec-link:hover { text-decoration: underline; }
+
 section { padding: 80px 0; position: relative; z-index: 1; }
 section + section { border-top: 1px solid var(--border); }
+
 /* ═══════ COUNTDOWN ═══════ */
 .countdown-band {
   position: relative; z-index: 1;
@@ -239,6 +256,7 @@ section + section { border-top: 1px solid var(--border); }
   font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
   color: var(--muted);
 }
+
 /* ═══════ STORY SECTION ═══════ */
 .story-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
@@ -260,6 +278,7 @@ section + section { border-top: 1px solid var(--border); }
 .tag-blue { background: #00d4ff15; color: var(--cyan); border: 1px solid #00d4ff30; }
 .tag-purple { background: #7b4fce15; color: #b388ff; border: 1px solid #7b4fce30; }
 .tag-gold { background: #f5c84215; color: var(--gold); border: 1px solid #f5c84230; }
+
 .story-art {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -289,6 +308,7 @@ section + section { border-top: 1px solid var(--border); }
   width: 80px; height: 2px; margin: 10px auto 0;
   background: linear-gradient(90deg, transparent, var(--cyan), transparent);
 }
+
 /* ═══════ TRAILERS ═══════ */
 .trailers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .trailer-card {
@@ -320,6 +340,7 @@ section + section { border-top: 1px solid var(--border); }
   font-size: 12px; color: var(--muted); letter-spacing: 1px;
 }
 .trailer-meta span { color: var(--gold); }
+
 /* ═══════ CHARACTERS ═══════ */
 .chars-grid {
   display: grid;
@@ -336,11 +357,13 @@ section + section { border-top: 1px solid var(--border); }
 }
 .char-card:hover { border-color: var(--purple); transform: translateY(-3px); }
 .char-card:hover .char-glow { opacity: 1; }
+
 .char-glow {
   position: absolute; inset: 0;
   background: radial-gradient(ellipse 70% 40% at 50% 0%, #7b4fce10, transparent);
   opacity: 0; transition: opacity .3s; pointer-events: none;
 }
+
 .char-header {
   padding: 20px 22px 0;
   display: flex; align-items: flex-start; gap: 14px;
@@ -367,6 +390,7 @@ section + section { border-top: 1px solid var(--border); }
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px; color: var(--muted); font-style: italic;
 }
+
 .char-body { padding: 16px 22px 20px; flex: 1; }
 .char-quote {
   font-family: 'Barlow Condensed', sans-serif;
@@ -377,6 +401,7 @@ section + section { border-top: 1px solid var(--border); }
   line-height: 1.4;
 }
 .char-desc { font-size: 13.5px; color: var(--text); line-height: 1.75; }
+
 .char-footer {
   padding: 10px 22px 16px;
   display: flex; gap: 6px; flex-wrap: wrap;
@@ -386,6 +411,7 @@ section + section { border-top: 1px solid var(--border); }
   font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
   padding: 3px 8px; border-radius: 20px;
 }
+
 /* avatar color variants */
 .av-gold { background: #f5c84220; border-color: #f5c84240; }
 .av-cyan { background: #00d4ff20; border-color: #00d4ff40; }
@@ -398,6 +424,7 @@ section + section { border-top: 1px solid var(--border); }
 .role-criminal { color: #ff8c28; }
 .role-legend { color: #b388ff; }
 .role-duo { color: var(--pink); }
+
 /* ═══════ SCREENSHOTS / MEDIA GRID ═══════ */
 .media-masonry {
   display: grid;
@@ -444,12 +471,14 @@ section + section { border-top: 1px solid var(--border); }
 .mtag-char { background: #f5c84222; color: var(--gold); border: 1px solid #f5c84240; }
 .mtag-act { background: #ff4fa322; color: var(--pink); border: 1px solid #ff4fa340; }
 .mtag-art { background: #7b4fce22; color: #b388ff; border: 1px solid #7b4fce40; }
+
 /* decorative city bg shapes inside cells */
 .city-bg {
   position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
   overflow: hidden; opacity: .25;
 }
 .city-bg svg { width: 100%; }
+
 /* ═══════ LOCATIONS ═══════ */
 .locs-grid {
   display: grid;
@@ -482,6 +511,7 @@ section + section { border-top: 1px solid var(--border); }
   margin-bottom: 6px;
 }
 .loc-desc { font-size: 13px; color: var(--text); line-height: 1.65; }
+
 /* ═══════ FOOTER ═══════ */
 footer {
   position: relative; z-index: 1;
@@ -502,6 +532,7 @@ footer {
 }
 .footer-logo span { color: var(--white); }
 .footer-tagline { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
 .footer-col h4 {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
@@ -512,6 +543,7 @@ footer {
   font-size: 13px; color: var(--text); transition: color .2s;
 }
 .footer-col a:hover { color: var(--cyan); }
+
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding-top: 20px;
@@ -525,6 +557,7 @@ footer {
   color: var(--muted); transition: color .2s;
 }
 .footer-socials a:hover { color: var(--cyan); }
+
 /* ═══════ LOGIN MODAL ═══════ */
 .modal-backdrop {
   display: none; position: fixed; inset: 0; z-index: 999;
@@ -545,12 +578,17 @@ footer {
   box-shadow: 0 40px 100px #00000090, 0 0 0 1px var(--border);
 }
 @keyframes mIn{from{transform:scale(.94) translateY(-12px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+
+.modal-stars {
+  position: absolute; inset: 0; border-radius: 8px; overflow: hidden; pointer-events: none;
+}
 .modal-close {
   position: absolute; top:14px; right:16px;
   background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;
   transition: color .2s;
 }
 .modal-close:hover { color: var(--white); }
+
 .modal-logo {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 38px; letter-spacing: 4px;
@@ -564,6 +602,7 @@ footer {
   letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
   margin-bottom: 24px;
 }
+
 .modal-tabs { display:flex; border-bottom:1px solid var(--border); margin:0 -36px 24px; padding:0 36px; }
 .mtab {
   flex:1; padding:10px;
@@ -573,8 +612,10 @@ footer {
   margin-bottom:-1px; color:var(--muted); cursor:pointer; transition:all .2s;
 }
 .mtab.on { color:var(--gold); border-bottom-color:var(--gold); }
+
 .mpanel { display:none; }
 .mpanel.on { display:block; }
+
 .fg { margin-bottom:16px; }
 .fl { display:block; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
 .fi {
@@ -588,8 +629,10 @@ footer {
 .fi::placeholder { color:#35334e; }
 .frow { display:flex; gap:12px; }
 .frow .fg { flex:1; }
+
 .forgot { display:block; text-align:right; font-size:12px; color:var(--muted); margin-top:-10px; margin-bottom:16px; }
 .forgot:hover { color:var(--gold); }
+
 .bsubmit {
   width:100%; padding:13px;
   background:var(--gold); color:#03030a;
@@ -598,8 +641,10 @@ footer {
   border:none;border-radius:3px;cursor:pointer;transition:background .2s;
 }
 .bsubmit:hover { background:var(--gold2); }
+
 .divider { display:flex;align-items:center;gap:12px;margin:18px 0; font-size:11px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase; }
 .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--border); }
+
 .bdiscord {
   width:100%;padding:12px;
   background:#5865F2;color:#fff;
@@ -609,9 +654,11 @@ footer {
   display:flex;align-items:center;justify-content:center;gap:8px;
 }
 .bdiscord:hover { background:#4752c4; }
+
 .check-row { display:flex;gap:8px;align-items:flex-start;margin-top:12px; font-size:12px;color:var(--muted); }
 .check-row input { margin-top:2px; accent-color:var(--gold); }
 .check-row a { color:var(--gold); }
+
 /* ═══════ RESPONSIVE ═══════ */
 @media(max-width:900px){
   .main-grid,.story-grid,.trailers-grid,.footer-inner{ grid-template-columns:1fr; }
@@ -626,14 +673,17 @@ footer {
   .media-masonry { grid-template-columns:1fr; }
   .cd-num { font-size:52px; }
 }
+
 /* fade-in */
 .fi-anim { opacity:0; transform:translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .fi-anim.vis { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
+
 <!-- ═══════ STAR CANVAS ═══════ -->
 <canvas id="starfield"></canvas>
+
 <!-- ═══════ NAV ═══════ -->
 <nav>
   <div class="nav-logo">VI<span>HUB</span></div>
@@ -644,12 +694,13 @@ footer {
     <li><a href="#media">Media</a></li>
     <li><a href="#locations">Locations</a></li>
   </ul>
-  <div class="nav-actions" id="nav-actions">
+  <div class="nav-actions">
     <div class="live-pill"><div class="live-dot"></div>LIVE</div>
     <button class="btn-nav btn-login" onclick="openModal('login')">Login</button>
     <button class="btn-nav btn-join" onclick="openModal('register')">Join Free</button>
   </div>
 </nav>
+
 <!-- ═══════ HERO ═══════ -->
 <section style="padding:0;border:none;">
   <div class="hero">
@@ -670,6 +721,7 @@ footer {
     <div class="scroll-hint"><div class="scroll-arrow"></div>SCROLL</div>
   </div>
 </section>
+
 <!-- ═══════ COUNTDOWN ═══════ -->
 <div class="countdown-band">
   <div class="cd-label">GTA VI LAUNCHES — <span>NOVEMBER 19, 2026</span></div>
@@ -684,6 +736,7 @@ footer {
   </div>
   <div class="cd-platform">PlayStation 5 &amp; Xbox Series X|S · Captured on PS5</div>
 </div>
+
 <!-- ═══════ STORY ═══════ -->
 <section id="story">
   <div class="wrap fi-anim">
@@ -713,6 +766,7 @@ footer {
     </div>
   </div>
 </section>
+
 <!-- ═══════ TRAILERS ═══════ -->
 <section id="trailers">
   <div class="wrap fi-anim">
@@ -722,7 +776,7 @@ footer {
     </div>
     <div class="trailers-grid">
       <div class="trailer-card">
-        <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" allowfullscreen loading="lazy" title="GTA VI Trailer 1"></iframe>
+        <iframe src="https://www.youtube.com/embed/QdBZExpgErs" allowfullscreen loading="lazy" title="GTA VI Trailer 1"></iframe>
         <div class="trailer-card-body">
           <div class="trailer-badge">OFFICIAL TRAILER 1</div>
           <div class="trailer-title">Grand Theft Auto VI — Trailer 1</div>
@@ -730,7 +784,7 @@ footer {
         </div>
       </div>
       <div class="trailer-card">
-        <iframe src="https://www.youtube.com/embed/VQRLujxTm3c" allowfullscreen loading="lazy" title="GTA VI Trailer 2"></iframe>
+        <iframe src="https://www.youtube.com/embed/pZgMpjjgCRA" allowfullscreen loading="lazy" title="GTA VI Trailer 2"></iframe>
         <div class="trailer-card-body">
           <div class="trailer-badge">OFFICIAL TRAILER 2</div>
           <div class="trailer-title">Grand Theft Auto VI — Trailer 2</div>
@@ -740,6 +794,7 @@ footer {
     </div>
   </div>
 </section>
+
 <!-- ═══════ CHARACTERS ═══════ -->
 <section id="characters">
   <div class="wrap fi-anim">
@@ -748,6 +803,7 @@ footer {
       <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--muted);letter-spacing:1px;">OFFICIAL CHARACTER BIOS FROM ROCKSTAR GAMES</span>
     </div>
     <div class="chars-grid">
+
       <!-- JASON -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -769,6 +825,7 @@ footer {
           <span class="char-tag tag-purple">Drug Runner</span>
         </div>
       </div>
+
       <!-- LUCIA -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -790,6 +847,7 @@ footer {
           <span class="char-tag tag-purple">Ex-Con</span>
         </div>
       </div>
+
       <!-- BRIAN HEDER -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -811,6 +869,7 @@ footer {
           <span class="char-tag tag-blue">Boatyard</span>
         </div>
       </div>
+
       <!-- CAL HAMPTON -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -832,6 +891,7 @@ footer {
           <span class="char-tag tag-gold">Jason's Ally</span>
         </div>
       </div>
+
       <!-- BOOBIE IKE -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -853,6 +913,7 @@ footer {
           <span class="char-tag tag-blue">Real Estate</span>
         </div>
       </div>
+
       <!-- DRE'QUAN -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -874,6 +935,7 @@ footer {
           <span class="char-tag tag-gold">Wildcard</span>
         </div>
       </div>
+
       <!-- REAL DIMEZ -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -895,6 +957,7 @@ footer {
           <span class="char-tag tag-gold">Signed Artists</span>
         </div>
       </div>
+
       <!-- RAUL BAUTISTA -->
       <div class="char-card">
         <div class="char-glow"></div>
@@ -916,9 +979,11 @@ footer {
           <span class="char-tag" style="background:#ff4fa318;color:#ff4fa3;border:1px solid #ff4fa330;">High Stakes</span>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+
 <!-- ═══════ MEDIA / SCREENSHOTS ═══════ -->
 <section id="media">
   <div class="wrap fi-anim">
@@ -927,6 +992,7 @@ footer {
       <a class="sec-link" href="https://www.rockstargames.com/VI" target="_blank">View all on Rockstar ↗</a>
     </div>
     <div class="media-masonry">
+
       <div class="media-cell wide tall">
         <div class="media-cell-inner">
           <div class="city-bg"><svg viewBox="0 0 400 200" fill="none"><rect x="10" y="80" width="40" height="120" fill="#00d4ff08"/><rect x="60" y="40" width="30" height="160" fill="#00d4ff10"/><rect x="100" y="60" width="50" height="140" fill="#00d4ff08"/><rect x="160" y="20" width="60" height="180" fill="#00d4ff12"/><rect x="230" y="50" width="40" height="150" fill="#00d4ff08"/><rect x="280" y="30" width="70" height="170" fill="#00d4ff10"/><rect x="360" y="70" width="30" height="130" fill="#00d4ff08"/></svg></div>
@@ -935,18 +1001,21 @@ footer {
           <div class="media-tag mtag-loc">VICE CITY</div>
         </div>
       </div>
+
       <div class="media-cell">
         <div class="media-cell-inner">🧔<div class="media-label">Jason Duval — Official Art</div><div class="media-tag mtag-char">JASON</div></div>
       </div>
       <div class="media-cell">
         <div class="media-cell-inner">👩<div class="media-label">Lucia Caminos — Official Art</div><div class="media-tag mtag-char">LUCIA</div></div>
       </div>
+
       <div class="media-cell">
         <div class="media-cell-inner">🚁<div class="media-label">Police Helicopter Chase Scene</div><div class="media-tag mtag-act">ACTION</div></div>
       </div>
       <div class="media-cell">
         <div class="media-cell-inner">🌴<div class="media-label">Leonida Keys — Coastal Route</div><div class="media-tag mtag-loc">KEYS</div></div>
       </div>
+
       <div class="media-cell wide">
         <div class="media-cell-inner">
           <div class="city-bg"><svg viewBox="0 0 400 100" fill="none"><ellipse cx="200" cy="100" rx="200" ry="60" fill="#f5c84208"/></svg></div>
@@ -955,15 +1024,18 @@ footer {
           <div class="media-tag mtag-loc">GRASSRIVERS</div>
         </div>
       </div>
+
       <div class="media-cell tall">
         <div class="media-cell-inner">🏦<div class="media-label">Bank Heist — Raul Bautista's Crew</div><div class="media-tag mtag-act">HEIST</div></div>
       </div>
+
       <div class="media-cell">
         <div class="media-cell-inner">🚤<div class="media-label">Brian's Boatyard &amp; Marina</div><div class="media-tag mtag-loc">KEYS</div></div>
       </div>
       <div class="media-cell">
         <div class="media-cell-inner">🎤<div class="media-label">Real Dimez — Studio Session</div><div class="media-tag mtag-char">REAL DIMEZ</div></div>
       </div>
+
       <div class="media-cell">
         <div class="media-cell-inner">🌅<div class="media-label">Port Gellhorn — Harbor at Dusk</div><div class="media-tag mtag-loc">PORT</div></div>
       </div>
@@ -976,6 +1048,7 @@ footer {
       <div class="media-cell">
         <div class="media-cell-inner">🏔️<div class="media-label">Mount Kalaga National Park</div><div class="media-tag mtag-loc">MT KALAGA</div></div>
       </div>
+
       <div class="media-cell wide">
         <div class="media-cell-inner">
           🎨
@@ -983,15 +1056,18 @@ footer {
           <div class="media-tag mtag-art">KEY ART</div>
         </div>
       </div>
+
       <div class="media-cell">
         <div class="media-cell-inner">👑<div class="media-label">Boobie Ike — Jack of Hearts</div><div class="media-tag mtag-char">BOOBIE IKE</div></div>
       </div>
       <div class="media-cell">
         <div class="media-cell-inner">🏢<div class="media-label">Little Cuba — Panadería District</div><div class="media-tag mtag-loc">LITTLE CUBA</div></div>
       </div>
+
     </div>
   </div>
 </section>
+
 <!-- ═══════ LOCATIONS ═══════ -->
 <section id="locations">
   <div class="wrap fi-anim">
@@ -1044,6 +1120,7 @@ footer {
     </div>
   </div>
 </section>
+
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
   <div class="wrap">
@@ -1086,16 +1163,19 @@ footer {
     </div>
   </div>
 </footer>
+
 <!-- ═══════ LOGIN MODAL ═══════ -->
 <div class="modal-backdrop" id="mbg" onclick="closeOuter(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-logo">VI<span>HUB</span></div>
     <div class="modal-tagline">Grand Theft Auto VI Community</div>
+
     <div class="modal-tabs">
       <button class="mtab on" id="tl" onclick="swTab('login')">LOGIN</button>
       <button class="mtab" id="tr" onclick="swTab('register')">REGISTER</button>
     </div>
+
     <!-- LOGIN -->
     <div class="mpanel on" id="pl">
       <div class="fg"><label class="fl">Username or Email</label><input class="fi" type="text" placeholder="your@email.com"></div>
@@ -1108,6 +1188,7 @@ footer {
         CONTINUE WITH DISCORD
       </button>
     </div>
+
     <!-- REGISTER -->
     <div class="mpanel" id="pr">
       <div class="frow">
@@ -1126,95 +1207,21 @@ footer {
     </div>
   </div>
 </div>
-<!-- ======= SUPABASE LOGIN MODAL ======= -->
-<div class="modal-backdrop" id="loginModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-logo">VI HUB <span></span></div>
-    <div class="modal-tagline">Sign in to your account</div>
-    <div class="modal-tabs">
-      <button class="mtab on" data-tab="loginTab">Login</button>
-      <button class="mtab" data-tab="registerTab">Register</button>
-    </div>
-    <div class="mpanel on" id="loginTab">
-      <div class="fg">
-        <label class="fl">Email</label>
-        <input type="email" class="fi" id="loginEmail" placeholder="you@example.com">
-      </div>
-      <div class="fg">
-        <label class="fl">Password</label>
-        <input type="password" class="fi" id="loginPassword" placeholder="••••••••">
-      </div>
-      <button class="bsubmit" onclick="login()">Login</button>
-    </div>
-    <div class="mpanel" id="registerTab">
-      <div class="fg">
-        <label class="fl">Email</label>
-        <input type="email" class="fi" id="registerEmail" placeholder="you@example.com">
-      </div>
-      <div class="fg">
-        <label class="fl">Password</label>
-        <input type="password" class="fi" id="registerPassword" placeholder="••••••••">
-      </div>
-      <button class="bsubmit" onclick="register()">Register</button>
-    </div>
-  </div>
-</div>
 
-<script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-  const supabaseUrl = 'https://qgpzpoozgglixrlaeqed.supabase.co';
-  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncHpwb296Z2dsaXhybGFlcWVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4OTU1MzksImV4cCI6MjA5MDQ3MTUzOX0.vgr9ffLuIznRAOEf9swIMrEZZ9xotqivj9osMa_mvwc';
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-  async function login() {
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return alert('Login failed: ' + error.message);
-    alert('Login successful! Welcome ' + data.user.email);
-    closeModal();
-  }
-
-  async function register() {
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return alert('Registration failed: ' + error.message);
-    alert('Registration successful! Check your email to confirm.');
-    closeModal();
-  }
-
-  function closeModal() {
-    document.getElementById('loginModal').classList.remove('open');
-  }
-
-  function openModal() {
-    document.getElementById('loginModal').classList.add('open');
-  }
-
-  document.querySelectorAll('.mtab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.mtab').forEach(t => t.classList.remove('on'));
-      document.querySelectorAll('.mpanel').forEach(p => p.classList.remove('on'));
-      tab.classList.add('on');
-      document.getElementById(tab.dataset.tab).classList.add('on');
-    });
-  });
 <script>
 /* ── STARFIELD ── */
 (function(){
   const c = document.getElementById('starfield');
   const ctx = c.getContext('2d');
   let W, H, stars=[], nebulas=[];
+
   function resize(){
     W = c.width = window.innerWidth;
     H = c.height = window.innerHeight;
   }
   resize();
   window.addEventListener('resize', resize);
+
   // stars
   for(let i=0;i<320;i++){
     stars.push({
@@ -1236,9 +1243,11 @@ footer {
       a: Math.random()*.06+.02
     });
   }
+
   let t=0;
   function draw(){
     ctx.clearRect(0,0,W,H);
+
     // nebulas
     nebulas.forEach(n=>{
       const grd = ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.rx);
@@ -1252,6 +1261,7 @@ footer {
       ctx.fill();
       ctx.restore();
     });
+
     // stars
     t += .008;
     stars.forEach(s=>{
@@ -1261,6 +1271,7 @@ footer {
       ctx.fillStyle = `rgba(200,220,255,${alpha})`;
       ctx.fill();
     });
+
     // shooting star occasionally
     if(Math.random()<.002){
       const sx=Math.random()*W, sy=Math.random()*H*0.5;
@@ -1272,10 +1283,12 @@ footer {
       ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(sx+80,sy+20);
       ctx.stroke();
     }
+
     requestAnimationFrame(draw);
   }
   draw();
 })();
+
 /* ── COUNTDOWN ── */
 function tick(){
   const d=new Date('2026-11-19T00:00:00');
@@ -1292,6 +1305,7 @@ function tick(){
   document.getElementById('cds').textContent=String(sec).padStart(2,'0');
 }
 tick(); setInterval(tick,1000);
+
 /* ── MODAL ── */
 function openModal(tab){
   document.getElementById('mbg').classList.add('open');
@@ -1306,75 +1320,6 @@ function swTab(t){
   document.getElementById('pl').classList.toggle('on',t==='login');
   document.getElementById('pr').classList.toggle('on',t==='register');
 }
-
-/* ── SUPABASE LOGIN / SIGNUP (Added) ── */
-const supabaseUrl = 'https://qgpzpoozgglixrlaeqed.supabase.co';
-const supabaseAnonKey = 'sb_publishable_yM5nu-ueIE4GOWQ-AXp1zA_KTacV3z3';
-const supabase = Supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-async function loginWithEmail() {
-  const email = document.querySelector('#pl input[type="text"]').value.trim();
-  const password = document.querySelector('#pl input[type="password"]').value;
-  if (!email || !password) return alert("Please enter email and password");
-
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) alert("Login failed: " + error.message);
-  else {
-    alert("Successfully logged in! Welcome to VI HUB 🎉");
-    closeModal();
-    updateNavForLoggedInUser(data.user);
-  }
-}
-
-async function registerWithEmail() {
-  const username = document.querySelector('#pr input[placeholder="CopiumKing99"]').value.trim();
-  const displayName = document.querySelector('#pr input[placeholder="Jason Bourne"]').value.trim();
-  const email = document.querySelector('#pr input[type="email"]').value.trim();
-  const password = document.querySelector('#pr input[type="password"]').value;
-  const agreed = document.getElementById('tc').checked;
-
-  if (!email || !password || !username) return alert("Please fill all fields");
-  if (!agreed) return alert("You must agree to the Terms of Service and Privacy Policy");
-  if (password.length < 8) return alert("Password must be at least 8 characters");
-
-  const { error } = await supabase.auth.signUp({
-    email, password,
-    options: { data: { username, display_name: displayName || username } }
-  });
-  if (error) alert("Registration failed: " + error.message);
-  else alert("Account created! Please check your email to confirm your account.");
-}
-
-async function signInWithDiscord() {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'discord',
-    options: { redirectTo: window.location.href }
-  });
-  if (error) alert("Discord login error: " + error.message);
-}
-
-function updateNavForLoggedInUser(user) {
-  const navActions = document.getElementById('nav-actions');
-  const name = user.user_metadata?.display_name || user.user_metadata?.username || 'User';
-  navActions.innerHTML = `
-    <div style="color:var(--gold); font-weight:600; display:flex; align-items:center; gap:8px;">
-      👤 ${name}
-    </div>
-    <button class="btn-nav btn-login" onclick="logout()">Logout</button>
-  `;
-}
-
-async function logout() {
-  await supabase.auth.signOut();
-  location.reload();
-}
-
-/* Attach click events to the buttons */
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('#pl .bsubmit').addEventListener('click', loginWithEmail);
-  document.querySelector('#pr .bsubmit').addEventListener('click', registerWithEmail);
-  document.querySelectorAll('.bdiscord').forEach(btn => btn.addEventListener('click', signInWithDiscord));
-});
 
 /* ── SCROLL FADE-IN ── */
 const obs = new IntersectionObserver(entries=>{
